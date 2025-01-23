@@ -23,8 +23,6 @@ const BookDetailPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!getCookie("token")) {
-      // alert("user must login to comment");
-
       navigate("/login", { state: { from: location } });
       return;
     }
