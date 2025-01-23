@@ -8,7 +8,8 @@ import Register from "./pages/Register.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import BookListPage from "./pages/BookListPage.jsx";
 import BookDetailPage from "./pages/BookDetailPage.jsx";
-import { booksLoader, getSingleBookLoader } from "./loaders.js";
+import { booksLoader, getSingleBookLoader, userLoader } from "./loaders.js";
+import Dashboard from "./pages/Dashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,11 @@ const router = createBrowserRouter([
     path: "/book/:bookId",
     element: <BookDetailPage />,
     loader: getSingleBookLoader,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    // loader: userLoader,
   },
 ]);
 

@@ -19,3 +19,13 @@ export async function getSingleBookLoader({ params: { bookId } }) {
         console.log("🚀 ~ getSingleBookLoader ~ error:", error)
     }
 }
+export async function userLoader({ params: { userId } }) {
+    try {
+        const response = await fetch("http://localhost:3000/api/user/" + userId);
+        let data = await response.json();
+        console.log("🚀 ~ getSingleBookLoader ~ data:", data)
+        return data.data ?? [];
+    } catch (error) {
+        console.log("🚀 ~ getSingleBookLoader ~ error:", error)
+    }
+}
