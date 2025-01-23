@@ -1,18 +1,33 @@
 import React, { useState } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
+import {
+  useLoaderData,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { getSingleBookLoader } from "../loaders";
+import getCookie from "../utility/helper"; // Fix the import statement
 
 const BookDetailPage = () => {
   const { bookId } = useParams();
   const book = useLoaderData(bookId);
   console.log("🚀 ~ BookDetailPage ~ book:", book);
-
+  const navigate = useNavigate();
+  console.log("🚀 ~ handleSubmit ~ navigate:", navigate);
+  const location = useLocation();
+  console.log("🚀 ~ handleSubmit ~ location:", location);
   const [comments, setComments] = useState(book.reviews ?? []);
   const [newComment, setNewComment] = useState("");
   const [newRating, setNewRating] = useState(0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!getCookie("token")) {
+      // alert("user must login to comment");
+
+      navigate("/login", { state: { from: location } });
+      return;
+    }
     if (newComment && newRating) {
       const comment = {
         reviewText: newComment,
