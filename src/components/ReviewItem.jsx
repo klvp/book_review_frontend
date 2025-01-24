@@ -1,6 +1,8 @@
 import { useState } from "react";
+import getCookie from "../utility/helper";
+import { userLoader } from "../loaders";
 
-export function ReviewItem({ review }) {
+export function ReviewItem({ review, setReview }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedReview, setEditedReview] = useState(review.reviewText);
   const [editedRating, setEditedRating] = useState(review.rating);
@@ -12,12 +14,50 @@ export function ReviewItem({ review }) {
   const handleSave = () => {
     // Here you would typically make an API call to update the review
     console.log("Saving review:", { text: editedReview, rating: editedRating });
+    if (editedReview && editedRating) {
+      const edit = {
+        reviewText: editedReview,
+        rating: editedRating,
+        book: review.book._id,
+      };
+      console.log("🚀 ~ handleSave ~ edit:", edit);
+      fetch(`http://localhost:3000/api/reviews/` + review._id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": getCookie("token"),
+        },
+        body: JSON.stringify(edit),
+      })
+        .then(() => {
+          userLoader().then((data) => setReview(() => data.reviews));
+        })
+        .catch((error) => {
+          setReview((prev) => prev);
+          console.error("🚀 ~ handleSave ~ error:", error);
+        });
+    }
     setIsEditing(false);
   };
 
   const handleDelete = () => {
     // Here you would typically make an API call to delete the review
-    console.log("Deleting review:", review._id);
+    fetch("http://localhost:3000/api/reviews/" + review._id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": getCookie("token"),
+      },
+      credentials: "include",
+    })
+      .then(() => {
+        console.log("Deleting review:", review._id);
+        userLoader().then((data) => setReview(() => data.reviews));
+      })
+      .catch((error) => {
+        setReview((prev) => prev);
+        console.error(error);
+      });
   };
 
   const handleRatingChange = (newRating) => {
@@ -28,7 +68,7 @@ export function ReviewItem({ review }) {
     <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
       <div className="flex flex-col md:flex-row md:items-start space-y-4 md:space-y-0 md:space-x-4 items-center justify-center">
         <img
-          src={review.book.image || "/placeholder.svg"}
+          src={review.book.image}
           alt={review.book.title}
           className="w-24 h-36 object-cover rounded"
         />

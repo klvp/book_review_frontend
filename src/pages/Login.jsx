@@ -9,7 +9,6 @@ const Login = () => {
     e.preventDefault();
     let res = new FormData(e.target);
     let formData = Object.fromEntries(res);
-    console.log("🚀 ~ submitForm ~ formData:", formData);
     fetch("http://localhost:3000/api/login", {
       method: "POST",
       headers: {

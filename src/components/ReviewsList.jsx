@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { ReviewItem } from "./ReviewItem";
 
 export function ReviewsList({ reviews }) {
+  const [reviewList, setReview] = useState(reviews);
   console.log("🚀 ~ ReviewsList ~ reviews:", reviews);
   return (
     <div>
@@ -8,8 +10,8 @@ export function ReviewsList({ reviews }) {
         Your Reviews
       </h2>
       <div className="space-y-4">
-        {reviews.map((review) => (
-          <ReviewItem key={review._id} review={review} />
+        {reviewList.map((review) => (
+          <ReviewItem key={review._id} review={review} setReview={setReview} />
         ))}
       </div>
     </div>

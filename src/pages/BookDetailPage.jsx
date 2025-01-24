@@ -39,8 +39,7 @@ const BookDetailPage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-auth-token":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzkxZDFkNjE0Y2RkNTZiNGJkY2NkMWQiLCJpYXQiOjE3Mzc2Mzg1NjJ9.GTkCiyBlE3pCCVbfn6wv_hCuLHQdLF-B-uL0LQ9AT_Q",
+          "x-auth-token": getCookie("token"),
         },
         body: JSON.stringify(comment),
       })
