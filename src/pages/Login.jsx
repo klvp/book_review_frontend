@@ -20,7 +20,9 @@ const Login = () => {
     })
       .then((res) => {
         e.target.reset();
-        navigate(location.state?.from?.pathname || "/", { replace: true });
+        navigate(location.state?.from?.pathname || "/dashboard", {
+          replace: true,
+        });
       })
       .catch((err) => {
         console.log(err);
