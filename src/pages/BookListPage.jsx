@@ -7,11 +7,15 @@ const BookListPage = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {books.map((book) => (
-        <Link to={`/book/${book._id}`} key={book._id}>
-          <BookCard book={book} />
-        </Link>
-      ))}
+      {books.length ? (
+        books.map((book) => (
+          <Link to={`/book/${book._id}`} key={book._id}>
+            <BookCard book={book} />
+          </Link>
+        ))
+      ) : (
+        <p>Network Failed</p>
+      )}
     </div>
   );
 };
