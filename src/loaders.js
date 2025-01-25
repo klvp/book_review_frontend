@@ -7,7 +7,6 @@ export async function booksLoader() {
         return data.data ?? [];
     } catch (error) {
         console.error("🚀 ~ booksLoader ~ error:", error)
-        return []
     }
 }
 export async function getSingleBookLoader({ params: { bookId } }) {

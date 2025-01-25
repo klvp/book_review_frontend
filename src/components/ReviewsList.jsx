@@ -9,7 +9,7 @@ export function ReviewsList({ reviews }) {
         Your Reviews
       </h2>
       <div className="space-y-4">
-        {reviewList.map((review) => (
+        {reviewList?.map((review) => (
           <ReviewItem key={review._id} review={review} setReview={setReview} />
         ))}
       </div>
