@@ -14,7 +14,7 @@ const BookListPage = () => {
           </Link>
         ))
       ) : (
-        <p>Network Failed</p>
+        <p>No Books Found</p>
       )}
     </div>
   );
