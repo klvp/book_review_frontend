@@ -11,13 +11,14 @@ import BookDetailPage from "./pages/BookDetailPage.jsx";
 import { booksLoader, getSingleBookLoader, userLoader } from "./loaders.js";
 import Dashboard from "./pages/Dashboard.jsx";
 import Layout from "./components/Layout.jsx";
+import RoutesInfo from "./pages/RoutesInfo.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <Layout>
-        <div>Hello world!</div>
+        <RoutesInfo />
       </Layout>
     ),
     errorElement: <NotFound />,
