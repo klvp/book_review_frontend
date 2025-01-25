@@ -47,7 +47,6 @@ export function ReviewItem({ review, setReview }) {
       credentials: "include",
     })
       .then(() => {
-        console.log("Deleting review:", review._id);
         userLoader().then((data) => setReview(() => data.reviews));
       })
       .catch((error) => {

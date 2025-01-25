@@ -11,11 +11,8 @@ import getCookie from "../utility/helper"; // Fix the import statement
 const BookDetailPage = () => {
   const { bookId } = useParams();
   const book = useLoaderData(bookId);
-  console.log("🚀 ~ BookDetailPage ~ book:", book);
   const navigate = useNavigate();
-  console.log("🚀 ~ handleSubmit ~ navigate:", navigate);
   const location = useLocation();
-  console.log("🚀 ~ handleSubmit ~ location:", location);
   const [bookDetail, setBookDetail] = useState(book);
   const [comments, setComments] = useState(book.reviews ?? []);
   const [newComment, setNewComment] = useState("");
@@ -33,7 +30,6 @@ const BookDetailPage = () => {
         rating: newRating,
         book: bookId,
       };
-      console.log("🚀 ~ handleSubmit ~ comment:", comment);
       setNewComment("");
       setNewRating(0);
       fetch(`http://localhost:3000/api/reviews`, {
@@ -53,7 +49,7 @@ const BookDetailPage = () => {
         .catch((error) => {
           setComments((prev) => prev);
           setBookDetail((prev) => prev);
-          console.log("🚀 ~ handleSubmit ~ error:", error);
+          console.error("🚀 ~ handleSubmit ~ error:", error);
         });
     }
   };
@@ -168,10 +164,15 @@ const BookDetailPage = () => {
                     <img
                       src={`https://api.dicebear.com/6.x/avataaars/svg?seed=${comment._id} `}
                       alt="User avatar"
-                      className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-600"
+                      className="w-15 h-15 rounded-full bg-gray-200 dark:bg-gray-600"
                     />
                   </div>
                   <div className="flex-1">
+                    <div className="flex items-center">
+                      <div className="text-lg font-semibold text-gray-900 dark:text-white">
+                        {comment.user.name}
+                      </div>
+                    </div>
                     <div className="flex items-center">
                       {[...Array(5)].map((_, i) => (
                         <svg

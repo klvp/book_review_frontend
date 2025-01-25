@@ -6,7 +6,7 @@ export async function booksLoader() {
         let data = await response.json();
         return data.data ?? [];
     } catch (error) {
-        console.log("🚀 ~ booksLoader ~ error:", error)
+        console.error("🚀 ~ booksLoader ~ error:", error)
     }
 }
 export async function getSingleBookLoader({ params: { bookId } }) {
@@ -15,7 +15,7 @@ export async function getSingleBookLoader({ params: { bookId } }) {
         let data = await response.json();
         return data.data ?? [];
     } catch (error) {
-        console.log("🚀 ~ getSingleBookLoader ~ error:", error)
+        console.error("🚀 ~ getSingleBookLoader ~ error:", error)
     }
 }
 export async function userLoader() {
@@ -36,6 +36,6 @@ export async function userLoader() {
         let data = await response.json();
         return data.data ?? {};
     } catch (error) {
-        console.log("🚀 ~ userLoader ~ error:", error)
+        console.error("🚀 ~ userLoader ~ error:", error)
     }
 }

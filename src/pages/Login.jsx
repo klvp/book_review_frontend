@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [user, setUser] = useState("");
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -19,13 +20,22 @@ const Login = () => {
     })
       .then((res) => {
         e.target.reset();
+        if (!res.ok) {
+          if (res.status === 404) {
+            setUser(() => "Email/Password is wrong");
+          } else {
+            setUser(() => "Server Error");
+          }
+          setTimeout(() => setUser(() => ""), 3000);
+          return;
+        }
         window.location.href = "/dashboard";
         // navigate(location.state?.from?.pathname || "/dashboard", {
         //   replace: true,
         // });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
   return (
@@ -62,7 +72,7 @@ const Login = () => {
             className="w-full p-1 border border-gray-300 rounded text-red-900 "
           />
         </div>
-
+        {user && <p className="text-red-700 pb-4">{user}</p>}
         <button
           type="submit"
           className="w-full bg-amber-400 hover:bg-amber-500 text-white font-medium py-2 rounded focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
