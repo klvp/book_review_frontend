@@ -126,14 +126,14 @@ const BookDetailPage = () => {
                 <button
                   key={rating}
                   type="button"
-                  className={`w-6 h-6 ${
-                    rating <= newRating ? "text-yellow-400" : "text-gray-300"
-                  } focus:outline-none relative`}
+                  className={`w-6 h-6 focus:outline-none relative`}
                   onClick={() => setNewRating(rating)}
                 >
                   <svg
                     key={rating}
-                    className={`w-5 h-5 text-yellow-400 absolute bottom-0 left-2.5 `}
+                    className={`w-5 h-5 absolute bottom-0 left-2.5 ${
+                      rating <= newRating ? "text-yellow-400" : "text-gray-300"
+                    }`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
