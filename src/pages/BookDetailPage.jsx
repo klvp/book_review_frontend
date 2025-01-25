@@ -6,7 +6,7 @@ import {
   useParams,
 } from "react-router-dom";
 import { getSingleBookLoader } from "../loaders";
-import getCookie from "../utility/helper"; // Fix the import statement
+import getCookie from "../utility/helper";
 
 const BookDetailPage = () => {
   const { bookId } = useParams();

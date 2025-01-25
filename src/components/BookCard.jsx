@@ -6,9 +6,9 @@ const BookCard = ({ book }) => {
       <img
         src={book.image || "/placeholder.svg"}
         alt={book.title}
-        className="w-full h-64 object-cover"
+        className="w-full h-64 object-cover object-top"
       />
-      <div className="p-4">
+      <div className="p-4 bg-white bg-opacity-75 dark:bg-gray-800 dark:bg-opacity-75">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
           {book.title}
         </h2>
