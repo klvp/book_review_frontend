@@ -10,38 +10,59 @@ import BookListPage from "./pages/BookListPage.jsx";
 import BookDetailPage from "./pages/BookDetailPage.jsx";
 import { booksLoader, getSingleBookLoader, userLoader } from "./loaders.js";
 import Dashboard from "./pages/Dashboard.jsx";
+import Layout from "./components/Layout.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello world!</div>,
+    element: (
+      <Layout>
+        <div>Hello world!</div>
+      </Layout>
+    ),
     errorElement: <NotFound />,
   },
   {
-    path: "/app",
-    element: <App />,
-  },
-  {
     path: "/login",
-    element: <Login />,
+    element: (
+      <Layout>
+        <Login />
+      </Layout>
+    ),
   },
   {
     path: "/register",
-    element: <Register />,
+    element: (
+      <Layout>
+        <Register />
+      </Layout>
+    ),
   },
   {
     path: "/books",
-    element: <BookListPage />,
+    element: (
+      <Layout>
+        <BookListPage />
+      </Layout>
+    ),
     loader: booksLoader,
   },
   {
     path: "/book/:bookId",
-    element: <BookDetailPage />,
+    element: (
+      <Layout>
+        <BookDetailPage />
+      </Layout>
+    ),
     loader: getSingleBookLoader,
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <Layout>
+        <Dashboard />
+      </Layout>
+    ),
     loader: userLoader,
   },
 ]);

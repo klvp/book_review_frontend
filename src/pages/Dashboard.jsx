@@ -4,7 +4,6 @@ import { UserDashboard } from "../components/UserDashboard";
 
 const Dashboard = () => {
   const user = useLoaderData();
-  console.log("🚀 ~ Dashboard ~ user:", user);
 
   return (
     <div className={"dark w-[80vw]"}>

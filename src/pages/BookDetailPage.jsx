@@ -16,6 +16,7 @@ const BookDetailPage = () => {
   console.log("🚀 ~ handleSubmit ~ navigate:", navigate);
   const location = useLocation();
   console.log("🚀 ~ handleSubmit ~ location:", location);
+  const [bookDetail, setBookDetail] = useState(book);
   const [comments, setComments] = useState(book.reviews ?? []);
   const [newComment, setNewComment] = useState("");
   const [newRating, setNewRating] = useState(0);
@@ -44,11 +45,16 @@ const BookDetailPage = () => {
         body: JSON.stringify(comment),
       })
         .then(() => {
-          getSingleBookLoader({ params: { bookId } }).then((data) =>
-            setComments(() => data.reviews)
-          );
+          getSingleBookLoader({ params: { bookId } }).then((data) => {
+            setComments(() => data.reviews);
+            setBookDetail(() => data);
+          });
         })
-        .catch((error) => setComments((prev) => prev));
+        .catch((error) => {
+          setComments((prev) => prev);
+          setBookDetail((prev) => prev);
+          console.log("🚀 ~ handleSubmit ~ error:", error);
+        });
     }
   };
 
@@ -58,23 +64,23 @@ const BookDetailPage = () => {
         <div className="p-6">
           <div className="flex flex-col md:flex-row">
             <img
-              src={book.image || "/placeholder.svg"}
-              alt={book.title}
+              src={bookDetail.image || "/placeholder.svg"}
+              alt={bookDetail.title}
               className="w-full md:w-1/3 rounded-lg shadow-lg mb-4 md:mb-0 md:mr-6"
             />
             <div className="flex-1">
               <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">
-                {book.title}
+                {bookDetail.title}
               </h1>
               <p className="text-xl mb-4 text-gray-600 dark:text-gray-300">
-                Authors: {book.authors.join(", ")}
+                Authors: {bookDetail.authors.join(", ")}
               </p>
               <div className="flex items-center mb-4">
                 {[...Array(5)].map((_, i) => (
                   <svg
                     key={i}
                     className={`w-5 h-5 ${
-                      i < Math.round(book.rating)
+                      i < Math.round(bookDetail.rating)
                         ? "text-yellow-400"
                         : "text-gray-300"
                     }`}
@@ -85,11 +91,11 @@ const BookDetailPage = () => {
                   </svg>
                 ))}
                 <span className="ml-2 text-lg text-gray-600 dark:text-gray-300">
-                  {book.rating.toFixed(1)}
+                  {bookDetail.rating.toFixed(1)}
                 </span>
               </div>
               <p className="text-gray-700 dark:text-gray-300 text-left">
-                {book.description}
+                {bookDetail.description}
               </p>
             </div>
           </div>

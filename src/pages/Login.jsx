@@ -19,9 +19,10 @@ const Login = () => {
     })
       .then((res) => {
         e.target.reset();
-        navigate(location.state?.from?.pathname || "/dashboard", {
-          replace: true,
-        });
+        window.location.href = "/dashboard";
+        // navigate(location.state?.from?.pathname || "/dashboard", {
+        //   replace: true,
+        // });
       })
       .catch((err) => {
         console.log(err);

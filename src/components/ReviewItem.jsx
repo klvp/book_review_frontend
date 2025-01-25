@@ -12,15 +12,12 @@ export function ReviewItem({ review, setReview }) {
   };
 
   const handleSave = () => {
-    // Here you would typically make an API call to update the review
-    console.log("Saving review:", { text: editedReview, rating: editedRating });
     if (editedReview && editedRating) {
       const edit = {
         reviewText: editedReview,
         rating: editedRating,
         book: review.book._id,
       };
-      console.log("🚀 ~ handleSave ~ edit:", edit);
       fetch(`http://localhost:3000/api/reviews/` + review._id, {
         method: "PATCH",
         headers: {
@@ -41,7 +38,6 @@ export function ReviewItem({ review, setReview }) {
   };
 
   const handleDelete = () => {
-    // Here you would typically make an API call to delete the review
     fetch("http://localhost:3000/api/reviews/" + review._id, {
       method: "DELETE",
       headers: {
@@ -56,7 +52,7 @@ export function ReviewItem({ review, setReview }) {
       })
       .catch((error) => {
         setReview((prev) => prev);
-        console.error(error);
+        console.error("🚀 ~ handleDelete ~ error:", error);
       });
   };
 
