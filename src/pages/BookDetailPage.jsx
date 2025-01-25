@@ -16,6 +16,7 @@ const BookDetailPage = () => {
   const [bookDetail, setBookDetail] = useState(book);
   const [comments, setComments] = useState(book.reviews ?? []);
   const [newComment, setNewComment] = useState("");
+  const [userReviewed, setUserReviwed] = useState(false);
   const [newRating, setNewRating] = useState(0);
 
   const handleSubmit = (e) => {
@@ -40,7 +41,12 @@ const BookDetailPage = () => {
         },
         body: JSON.stringify(comment),
       })
-        .then(() => {
+        .then(async (res) => {
+          let data = await res.json();
+          if (data?.message === "user book review exist") {
+            setUserReviwed(true);
+            setTimeout(() => setUserReviwed(false), 3000);
+          }
           getSingleBookLoader({ params: { bookId } }).then((data) => {
             setComments(() => data.reviews);
             setBookDetail(() => data);
@@ -138,6 +144,11 @@ const BookDetailPage = () => {
                 </button>
               ))}
             </div>
+            {userReviewed && (
+              <p className="text-red-700">
+                User review exist, updated existing review
+              </p>
+            )}
             <button
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
@@ -156,7 +167,7 @@ const BookDetailPage = () => {
           {comments.length ? (
             comments.map((comment) => (
               <div
-                key={comment.id}
+                key={comment._id}
                 className="mb-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg"
               >
                 <div className="flex items-start space-x-4">
