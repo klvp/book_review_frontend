@@ -11,6 +11,7 @@ import getCookie from "../utility/helper";
 const BookDetailPage = () => {
   const { bookId } = useParams();
   const book = useLoaderData(bookId);
+  console.log("🚀 ~ BookDetailPage ~ book:", book);
   const navigate = useNavigate();
   const location = useLocation();
   const [bookDetail, setBookDetail] = useState(book);
@@ -181,7 +182,7 @@ const BookDetailPage = () => {
                   <div className="flex-1">
                     <div className="flex items-center">
                       <div className="text-lg font-semibold text-gray-900 dark:text-white">
-                        {comment.user.name}
+                        {comment?.user?.name}
                       </div>
                     </div>
                     <div className="flex items-center">

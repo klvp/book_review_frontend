@@ -46,7 +46,7 @@ const router = createBrowserRouter([
         <BookListPage />
       </Layout>
     ),
-    loader: booksLoader,
+    // loader: booksLoader,
   },
   {
     path: "/book/:bookId",
