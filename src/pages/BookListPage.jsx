@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import BookCard from "../components/BookCard";
 import { useDispatch, useSelector } from "react-redux";
-import { getBooks } from "../store/booksSlice";
+import { getBooks } from "../store/booksListSlice";
 
 const BookListPage = () => {
   const dispatch = useDispatch();
