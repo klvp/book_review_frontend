@@ -1,15 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import reviewSlice from './reviewSlice'
-import bookSlice from './booksListSlice'
-import singleBookSlice from './bookSlice'
+import booksSlice from './booksListSlice'
+import bookSlice from './bookSlice'
 import userSlice from './userSlice'
 
 const store = configureStore({
     reducer: {
-        reviews: reviewSlice,
-        books: bookSlice,
+        books: booksSlice,
         user: userSlice,
-        book: singleBookSlice
+        book: bookSlice
     }
 })
 
