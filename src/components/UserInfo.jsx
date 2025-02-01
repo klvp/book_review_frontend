@@ -6,7 +6,7 @@ export function UserInfo({ user }) {
       </h2>
       <div className="flex flex-col items-center">
         <div className="w-24 h-24 bg-gray-300 dark:bg-gray-600 rounded-full mb-4 flex items-center justify-center text-2xl font-bold text-white">
-          {user.name.charAt(0).toUpperCase()}
+          {user.name?.charAt(0)?.toUpperCase()}
         </div>
         <h2 className="text-2xl font-semibold mb-2 text-gray-800 dark:text-gray-200">
           {user.name}

@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import { ReviewsList } from "./ReviewsList";
 import { UserInfo } from "./UserInfo";
-export function UserDashboard({ user }) {
-  if (!user) {
-    return (
-      <div className="flex justify-center items-center h-screen text-gray-800 dark:text-gray-200">
-        Loading...
-      </div>
-    );
+import { useSelector } from "react-redux";
+export function UserDashboard() {
+  const { data: user, status } = useSelector((state) => state.user);
+
+  if (status === "loading") {
+    return <p>Loading..</p>;
+  }
+
+  if (status === "error") {
+    return <p>Something Went Wrong..</p>;
   }
 
   return (
@@ -17,9 +20,13 @@ export function UserDashboard({ user }) {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <UserInfo user={user} />
-        <div className="md:col-span-2">
-          <ReviewsList reviews={user.reviews} />
-        </div>
+        {user.reviews?.length ? (
+          <div className="md:col-span-2">
+            <ReviewsList reviews={user.reviews} />
+          </div>
+        ) : (
+          "No Reviews"
+        )}
       </div>
     </div>
   );

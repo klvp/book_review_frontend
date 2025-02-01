@@ -24,7 +24,7 @@ const userSlice = createSlice({
             })
     }
 })
-export const { fetchBooks } = userSlice.actions
+export const { } = userSlice.actions
 export default userSlice.reducer
 
 export const getUser = createAsyncThunk("user/get", async () => {

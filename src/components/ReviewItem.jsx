@@ -1,8 +1,11 @@
 import { useState } from "react";
 import getCookie from "../utility/helper";
 import { userLoader } from "../loaders";
+import { getUser } from "../store/userSlice";
+import { useDispatch } from "react-redux";
 
-export function ReviewItem({ review, setReview }) {
+export function ReviewItem({ review }) {
+  const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [editedReview, setEditedReview] = useState(review.reviewText);
   const [editedRating, setEditedRating] = useState(review.rating);
@@ -27,10 +30,9 @@ export function ReviewItem({ review, setReview }) {
         body: JSON.stringify(edit),
       })
         .then(() => {
-          userLoader().then((data) => setReview(() => data.reviews));
+          dispatch(getUser());
         })
         .catch((error) => {
-          setReview((prev) => prev);
           console.error("🚀 ~ handleSave ~ error:", error);
         });
     }
@@ -47,10 +49,9 @@ export function ReviewItem({ review, setReview }) {
       credentials: "include",
     })
       .then(() => {
-        userLoader().then((data) => setReview(() => data.reviews));
+        dispatch(getUser());
       })
       .catch((error) => {
-        setReview((prev) => prev);
         console.error("🚀 ~ handleDelete ~ error:", error);
       });
   };
