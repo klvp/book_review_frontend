@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import {
-  useLoaderData,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-import { getSingleBookLoader } from "../loaders";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import getCookie from "../utility/helper";
+import { useDispatch, useSelector } from "react-redux";
+import { getSingleBook } from "../store/bookSlice";
 
 const BookDetailPage = () => {
   const { bookId } = useParams();
-  const book = useLoaderData(bookId);
-  console.log("🚀 ~ BookDetailPage ~ book:", book);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSingleBook(bookId));
+  }, [bookId]);
+
+  const { data: book, status } = useSelector((state) => state.book);
+
   const navigate = useNavigate();
   const location = useLocation();
-  const [bookDetail, setBookDetail] = useState(book);
-  const [comments, setComments] = useState(book.reviews ?? []);
   const [newComment, setNewComment] = useState("");
   const [userReviewed, setUserReviwed] = useState(false);
   const [newRating, setNewRating] = useState(0);
@@ -48,42 +48,43 @@ const BookDetailPage = () => {
             setUserReviwed(true);
             setTimeout(() => setUserReviwed(false), 3000);
           }
-          getSingleBookLoader({ params: { bookId } }).then((data) => {
-            setComments(() => data.reviews);
-            setBookDetail(() => data);
-          });
+          dispatch(getSingleBook(bookId));
         })
         .catch((error) => {
-          setComments((prev) => prev);
-          setBookDetail((prev) => prev);
           console.error("🚀 ~ handleSubmit ~ error:", error);
         });
     }
   };
 
+  if (status === "loading") {
+    return <p>Loading..</p>;
+  }
+  if (status === "error") {
+    return <p>Something Went Wrong..</p>;
+  }
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mb-8">
         <div className="p-6">
           <div className="flex flex-col md:flex-row">
             <img
-              src={bookDetail.image || "/placeholder.svg"}
-              alt={bookDetail.title}
+              src={book.image || "/placeholder.svg"}
+              alt={book.title}
               className="w-full md:w-1/3 rounded-lg shadow-lg mb-4 md:mb-0 md:mr-6"
             />
             <div className="flex-1">
               <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">
-                {bookDetail.title}
+                {book.title}
               </h1>
               <p className="text-xl mb-4 text-gray-600 dark:text-gray-300">
-                Authors: {bookDetail.authors.join(", ")}
+                Authors: {book.authors?.join(", ")}
               </p>
               <div className="flex items-center mb-4">
                 {[...Array(5)].map((_, i) => (
                   <svg
                     key={i}
                     className={`w-5 h-5 ${
-                      i < Math.round(bookDetail.rating)
+                      i < Math.round(book.rating)
                         ? "text-yellow-400"
                         : "text-gray-300"
                     }`}
@@ -94,11 +95,11 @@ const BookDetailPage = () => {
                   </svg>
                 ))}
                 <span className="ml-2 text-lg text-gray-600 dark:text-gray-300">
-                  {bookDetail.rating.toFixed(1)}
+                  {book.rating?.toFixed(1)}
                 </span>
               </div>
               <p className="text-gray-700 dark:text-gray-300 text-left">
-                {bookDetail.description}
+                {book.description}
               </p>
             </div>
           </div>
@@ -165,8 +166,8 @@ const BookDetailPage = () => {
           <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
             Comments
           </h2>
-          {comments.length ? (
-            comments.map((comment) => (
+          {book.reviews?.length ? (
+            book.reviews.map((comment) => (
               <div
                 key={comment._id}
                 className="mb-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg"

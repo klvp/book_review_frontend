@@ -55,7 +55,7 @@ const router = createBrowserRouter([
         <BookDetailPage />
       </Layout>
     ),
-    loader: getSingleBookLoader,
+    // loader: getSingleBookLoader,
   },
   {
     path: "/dashboard",
