@@ -19,7 +19,7 @@ const booksSlice = createSlice({
                 state.status = "loading"
             })
             .addCase(getSingleBook.rejected, (state, action) => {
-                state.status = action.error.message
+                state.status = "error"
             })
     }
 })
